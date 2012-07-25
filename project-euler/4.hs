@@ -13,6 +13,15 @@ isPalindrome x = s == reverse s
 nDigitProducts :: Int -> [Int]
 nDigitProducts n = [x * y | x <- nDigitNumbers n, y <- nDigitNumbers n]
 
+uniq :: (Eq a) => [a] -> [a]
+uniq [] = []
+uniq xs = reverse $ foldl something [] xs
+          where something acc x = if contains acc x then acc else x : acc
+
+contains :: (Eq a) => [a] -> a -> Bool
+contains []     _ = False
+contains (x:xs) y = if x == y then True else contains xs y
+
 nDigitNumbers :: Int -> [Int]
 nDigitNumbers n = [x | x <- [digitMin n .. digitMax n]]
   where
